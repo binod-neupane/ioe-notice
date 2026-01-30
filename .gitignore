@@ -1,0 +1,63 @@
+# -----------------------
+# Python
+# -----------------------
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+env/
+venv/
+ENV/
+*.egg-info/
+*.egg
+
+# -----------------------
+# Windows / OS files
+# -----------------------
+Thumbs.db
+Desktop.ini
+.DS_Store
+*.bak
+*.swp
+*.swo
+
+# -----------------------
+# VS Code
+# -----------------------
+.vscode/
+*.code-workspace
+
+# -----------------------
+# Logs
+# -----------------------
+*.log
+
+# -----------------------
+# Environment / Secrets
+# -----------------------
+.env
+.env.local
+.env.*.local
+config/secrets.py
+
+# -----------------------
+# GitHub Actions / CI
+# -----------------------
+.github/workflows/*.yml
+
+# -----------------------
+# Data / attachments / output
+# -----------------------
+data/
+data/pdf/
+data/image/
+*.sqlite
+*.db
+*.json
+
+# -----------------------
+# Misc / temporary
+# -----------------------
+*.tmp
+*.temp
+*.cache
