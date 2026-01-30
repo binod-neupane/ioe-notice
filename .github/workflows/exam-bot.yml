@@ -1,0 +1,46 @@
+name: IOE Exam Notice Bot
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+jobs:
+  run-exam-bot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Pull latest changes safely
+        run: |
+          git config user.name "exam-bot"
+          git config user.email "exam-bot@users.noreply.github.com"
+          git stash push -m "pre-run stash" || true
+          git pull --rebase origin main
+          git stash pop || true
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Run exam notice bot
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          ROLE_ID: ${{ secrets.ROLE_ID }}
+        run: |
+          python main.py
+      - name: Commit and push state and attachments if changed
+        run: |
+          git config user.name "exam-bot"
+          git config user.email "exam-bot@users.noreply.github.com"
+          mkdir -p data/pdf data/image
+          git add data/posted_links_exam.json data/pdf data/image || true
+          if ! git diff --cached --quiet; then
+            git commit -m "Update exam notice state and attachments"
+            git push origin main
+          else
+            echo "No new state or attachments to commit"
+          fi

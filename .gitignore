@@ -43,8 +43,6 @@ config/secrets.py
 # -----------------------
 # GitHub Actions / CI
 # -----------------------
-.github/workflows/*.yml
-
 # -----------------------
 # Data / attachments / output
 # -----------------------
